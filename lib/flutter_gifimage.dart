@@ -51,8 +51,10 @@ class GifController extends AnimationController {
   }
 }
 
+typedef FrameCallback = void Function(int frame);
+
 class GifImage extends StatefulWidget {
-  final VoidCallback? onFetchCompleted;
+  final FrameCallback? onFetchCompleted;
   final GifController controller;
   final ImageProvider image;
   final double width;
@@ -126,7 +128,7 @@ class GifImageState extends State<GifImage> {
             _fetchComplete = true;
             _curIndex = widget.controller.value.toInt();
             if (widget.onFetchCompleted != null) {
-              widget.onFetchCompleted!();
+              widget.onFetchCompleted!(_infos!.length);
             }
           });
       });
@@ -157,7 +159,7 @@ class GifImageState extends State<GifImage> {
             _fetchComplete = true;
             _curIndex = widget.controller.value.toInt();
             if (widget.onFetchCompleted != null) {
-              widget.onFetchCompleted!();
+              widget.onFetchCompleted!(_infos!.length);
             }
           });
       });
