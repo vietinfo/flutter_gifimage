@@ -1,15 +1,10 @@
-/*
-  author: Jpeng
-  email: peng8350@gmail.com
-  time:2019-7-26 3:30
-*/
-
 library flutter_gifimage;
 
 import 'dart:io';
 import 'dart:ui' as ui show Codec;
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 /// cache gif fetched image
@@ -54,14 +49,14 @@ class GifController extends AnimationController {
 typedef FrameCallback = void Function(int frame);
 
 class GifImage extends StatefulWidget {
-  final FrameCallback? onFetchCompleted;
+  final FrameCallback onFetchCompleted;
   final GifController controller;
   final ImageProvider image;
   final double width;
   final double height;
-  final Color? color;
+  final Color color;
   final BlendMode? colorBlendMode;
-  final BoxFit? fit;
+  final BoxFit fit;
   final AlignmentGeometry alignment;
   final ImageRepeat repeat;
   final Rect? centerSlice;
@@ -77,10 +72,10 @@ class GifImage extends StatefulWidget {
     this.excludeFromSemantics = false,
     required this.width,
     required this.height,
-    this.onFetchCompleted,
-    this.color,
+    required this.onFetchCompleted,
+    this.color = Colors.transparent,
     this.colorBlendMode,
-    this.fit,
+    this.fit = BoxFit.cover,
     this.alignment = Alignment.center,
     this.repeat = ImageRepeat.noRepeat,
     this.centerSlice,
@@ -127,9 +122,7 @@ class GifImageState extends State<GifImage> {
             _infos = imageInfors;
             _fetchComplete = true;
             _curIndex = widget.controller.value.toInt();
-            if (widget.onFetchCompleted != null) {
-              widget.onFetchCompleted!(_infos!.length);
-            }
+            widget.onFetchCompleted(_infos!.length);
           });
       });
     }
@@ -158,9 +151,7 @@ class GifImageState extends State<GifImage> {
             _infos = imageInfors;
             _fetchComplete = true;
             _curIndex = widget.controller.value.toInt();
-            if (widget.onFetchCompleted != null) {
-              widget.onFetchCompleted!(_infos!.length);
-            }
+            widget.onFetchCompleted(_infos!.length);
           });
       });
     }
